@@ -1,6 +1,6 @@
-# Esta regla es para que la aplicación de React (Single Page Application) funcione correctamente.
-# Asegura que si un usuario recarga la página en /asistente-ia/plan, no reciba un error 404.
+# Regla para reenviar las llamadas de la API a tu backend en Google Cloud Run.
 [[redirects]]
-  from = "/asistente-ia/*"
-  to = "/asistente-ia/asistente.html"
+  from = "/api/*"
+  to = "https://applectoescritura-backend-702516870563.europe-west1.run.app/:splat"
   status = 200
+  force = true
