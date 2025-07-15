@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Lectoescritura para el Educador</title>
+
+    <!-- Metadatos Open Graph -->
+    <meta property="og:title" content="Playbook de Lectoescritura para el Educador" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://playbooklectoescritura.netlify.app/" />
+    <meta property="og:image" content="https://playbooklectoescritura.netlify.app/vp-inicio.png" />
+    <meta property="og:description" content="Un compendio de estrategias prácticas, fundamentadas y tecnológicamente aumentadas para transformar la enseñanza de la lectoescritura." />
+    <meta property="article:published_time" content="2025-01-01T12:00:00Z" />
+    <meta property="article:author" content="Jesús Ángel Álvarez González" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Playbook de Lectoescritura para el Educador">
+    <meta name="twitter:description" content="Un compendio de estrategias prácticas para transformar la enseñanza de la lectoescritura.">
+    <meta name="twitter:image" content="https://playbooklectoescritura.netlify.app/vp-inicio.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --magenta-principal: #E4007C;
+            --cian-secundario: #00AEEF;
+            --gris-oscuro: #212529;
+            --gris-claro: #F8F9FA;
+            --blanco: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--gris-oscuro);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-link.active {
+            color: var(--magenta-principal);
+            font-weight: 700;
+        }
+
+            .nav-link.active .emoji-icon {
+                transform: scale(1.2);
+            }
+
+        .emoji-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-blanco">
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+                <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+                <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                    <li><a href="fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                    <li><a href="estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                    <li><a href="tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                    <li><a href="psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                    <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                    <li><a href="bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+                </ul>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <ul class="flex flex-col space-y-4">
+                    <li><a href="index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                    <li><a href="fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                    <li><a href="estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                    <li><a href="tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                    <li><a href="psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                    <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                    <li><a href="bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="page-1" class="min-h-screen flex flex-col justify-center items-center bg-gris-claro pt-20 pb-20">
+            <div class="text-center container mx-auto px-6">
+                <div class="mb-12">
+                    <span class="text-6xl">🧭</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gris-oscuro mt-4 font-poppins">Playbook de Lectoescritura para el Educador</h1>
+                    <p class="text-lg md:text-xl text-gray-600 mt-4 max-w-3xl mx-auto">Un compendio de estrategias prácticas, fundamentadas y tecnológicamente aumentadas para transformar la enseñanza de la lectoescritura.</p>
+                </div>
+
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-gris-oscuro font-poppins mb-8">Explora los Módulos</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                        <a href="fundamentos.html" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">🧠</span>
+                            <span class="font-semibold text-center">Fundamentos Neuropsicológicos</span>
+                        </a>
+                        <a href="estrategias.html" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">📚</span>
+                            <span class="font-semibold text-center">Métodos de Enseñanza</span>
+                        </a>
+                        <a href="tecnologia.html" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">💻</span>
+                            <span class="font-semibold text-center">Herramientas Digitales</span>
+                        </a>
+                        <a href="psicomotricidad.html" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">✏️</span>
+                            <span class="font-semibold text-center">Grafomotricidad</span>
+                        </a>
+                        <a href="/asistente-ia/" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">✨</span>
+                            <span class="font-semibold text-center">Asistente de IA</span>
+                        </a>
+                        <a href="bibliografia.html" class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">🗂️</span>
+                            <span class="font-semibold text-center">Recursos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-200">
+        <div class="bg-white py-12">
+            <div class="container mx-auto px-6 text-center">
+                <h3 class="text-2xl md:text-3xl font-bold text-gris-oscuro">¿Quieres llevar estas estrategias a tu aula?</h3>
+                <p class="text-gray-600 mt-2 mb-6 max-w-2xl mx-auto">Envíame un mensaje para una consulta inicial gratuita sobre EdTech o para recibir recursos exclusivos y actualizaciones del playbook.</p>
+
+                <form action="https://formspree.io/f/xanjrakl" method="POST" class="max-w-xl mx-auto flex flex-col gap-4">
+
+                    <div>
+                        <label for="email-input" class="sr-only">Tu correo electrónico</label>
+                        <input type="email"
+                               id="email-input"
+                               name="email"
+                               required
+                               placeholder="Tu correo electrónico profesional"
+                               class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    </div>
+
+                    <div>
+                        <label for="message-input" class="sr-only">Tu mensaje</label>
+                        <textarea id="message-input"
+                                  name="message"
+                                  rows="4"
+                                  placeholder="Escribe tu mensaje o consulta aquí..."
+                                  class="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
+                    </div>
+
+                    <button type="submit"
+                            style="background-color: #E4007C;"
+                            class="text-white font-bold py-3 px-6 rounded-md shadow-lg hover:opacity-90 transition-all duration-300 transform hover:-translate-y-1">
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="bg-gris-oscuro text-gray-400 py-6">
+            <div class="container mx-auto px-6 text-center">
+                <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+                <p class="text-xs mt-3">
+                    &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. |
+                    <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-400 hover:underline">
+                        Conecta en LinkedIn
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

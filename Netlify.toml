@@ -1,0 +1,6 @@
+# Esta regla es para que la aplicación de React (Single Page Application) funcione correctamente.
+# Asegura que si un usuario recarga la página en /asistente-ia/plan, no reciba un error 404.
+[[redirects]]
+  from = "/asistente-ia/*"
+  to = "/asistente-ia/asistente.html"
+  status = 200

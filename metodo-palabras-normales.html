@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Lectoescritura - Método de Palabras Generadoras</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --amarillo-vibrante: #FFC107;
+            --verde-ventaja: #28a745;
+            --rojo-desventaja: #dc3545;
+            --gris-oscuro: #212529;
+            --gris-claro: #F8F9FA;
+            --blanco: #FFFFFF;
+        }
+
+        body { 
+            font-family: 'Lato', sans-serif; 
+            color: var(--gris-oscuro); 
+            background-color: #E9ECEF;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
+        /* Left Navigation Panel */
+        .vertical-tabs-nav {
+            background-color: var(--gris-claro);
+            border-right: 1px solid #dee2e6;
+        }
+        .strategy-header {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--gris-oscuro); /* Dark text for yellow background */
+            background-color: var(--amarillo-vibrante);
+        }
+        .header__icon svg { width: 48px; height: 48px; margin: 0 auto 0.5rem; stroke: var(--gris-oscuro); }
+        .header__title { font-size: 1.25rem; font-weight: 700; }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            font-weight: 600;
+            color: #495057;
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-link:hover { background-color: #dee2e6; }
+        .tab-link.active {
+            background-color: var(--blanco);
+            color: var(--amarillo-vibrante);
+            border-left-color: var(--amarillo-vibrante);
+        }
+        .tab-link .tab-icon { margin-right: 0.75rem; }
+
+        /* Right Content Area */
+        .tab-content-area { background-color: var(--blanco); }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-pane.active { animation: fadeIn 0.4s ease-in-out; }
+
+        /* Content inside tabs */
+        .tab-pane h4 { font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .tab-pane h5 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .tab-pane p, .tab-pane li { line-height: 1.7; }
+        .tab-pane ul { list-style: none; padding: 0; }
+        
+        .advantage-card, .disadvantage-card {
+            display: flex; align-items: center; margin-bottom: 1rem;
+            background-color: var(--gris-claro); padding: 1rem; border-radius: 0.5rem;
+        }
+        .advantage-card .icon, .disadvantage-card .icon { flex-shrink: 0; margin-right: 1rem; }
+        .advantage-card .icon svg { color: var(--verde-ventaja); }
+        .disadvantage-card .icon svg { color: var(--rojo-desventaja); }
+        
+        /* Timeline */
+        .timeline-container { position: relative; padding: 1rem 0; }
+        .timeline-container::after { content: ''; position: absolute; width: 4px; background-color: #e5e7eb; top: 0; bottom: 0; left: 18px; z-index: 1; }
+        .timeline-item { position: relative; padding-left: 60px; margin-bottom: 2rem; }
+        .timeline-node { position: absolute; left: 0; top: 0; width: 36px; height: 36px; background-color: var(--amarillo-vibrante); color: var(--gris-oscuro); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Poppins', sans-serif; z-index: 2; border: 4px solid var(--blanco);}
+        .timeline-card { background: var(--gris-claro); padding: 1.5rem; border-radius: 0.5rem; }
+        .timeline-card h6 { font-weight: 700; }
+        .timeline-card p { font-size: 0.9rem; color: #495057; }
+        
+        /* Evaluation Grid */
+        .evaluation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .evaluation-card { background: var(--gris-claro); padding: 1.5rem; border-radius: 0.5rem; text-align: center; }
+        .evaluation-card .card__icon svg { color: var(--amarillo-vibrante); margin: 0 auto 1rem; width: 40px; height: 40px; }
+        .evaluation-card h6 { font-weight: 700; }
+        .evaluation-card p { font-size: 0.9rem; }
+
+        /* Video */
+        .video-responsive-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+        .video-responsive-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+   <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+            <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                <li><a href="fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                <li><a href="estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                <li><a href="tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                <li><a href="psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                <li><a href="bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+            </ul>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                <li><a href="fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                <li><a href="estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                <li><a href="tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                <li><a href="psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                <li><a href="bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <main class="flex-grow container mx-auto my-8">
+        <div class="md:grid md:grid-cols-12 gap-8">
+            <!-- Left Panel: Navigation -->
+            <nav class="vertical-tabs-nav md:col-span-4 lg:col-span-3 rounded-lg overflow-hidden shadow-lg h-fit" role="tablist" aria-orientation="vertical">
+                <div class="strategy-header">
+                    <div class="header__icon"><i data-lucide="scan-text"></i></div>
+                    <h1 class="header__title">Método de Palabras Generadoras</h1>
+                </div>
+                <div class="p-2">
+                    <button class="tab-link w-full" role="tab" aria-selected="true" aria-controls="tab-fundamento"><span class="tab-icon"><i data-lucide="book-open"></i></span>Fundamento</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-ventajas"><span class="tab-icon"><i data-lucide="scale"></i></span>Ventajas y Desventajas</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-aplicacion"><span class="tab-icon"><i data-lucide="list-steps"></i></span>Guía de Aplicación</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-evaluacion"><span class="tab-icon"><i data-lucide="target"></i></span>Evaluación y Video</button>
+                </div>
+            </nav>
+
+            <!-- Right Panel: Content -->
+            <div class="tab-content-area md:col-span-8 lg:col-span-9 bg-white p-6 md:p-10 rounded-lg shadow-lg mt-8 md:mt-0">
+                
+                <div id="tab-fundamento" class="tab-pane" role="tabpanel">
+                    <h4>Concepto y Fundamentos</h4>
+                    <p>El Método de Palabras Generadoras es una estrategia de enseñanza que se enmarca dentro de los enfoques analíticos o globales, y es una característica fundamental de los llamados "métodos mixtos". Su filosofía central radica en partir "desde la palabra, o sea, desde lo general a lo particular: palabra, sílaba y luego letras".</p>
+                    <p class="mt-4">Se basa en la idea de que los niños perciben y aprenden mejor las totalidades antes que los elementos. Por lo tanto, se comienza presentando una palabra denominada generadora y una representación gráfica de la misma. El método busca basar el aprendizaje en el proceso de globalización, considerando que los intereses y necesidades de los niños son vitales en la educación infantil.</p>
+                </div>
+
+                <div id="tab-ventajas" class="tab-pane" role="tabpanel">
+                    <h4>Análisis Equilibrado de Pros y Contras</h4>
+                    <div class="grid md:grid-cols-2 gap-x-8">
+                        <div>
+                            <h5 class="text-green-600 flex items-center"><i data-lucide="thumbs-up" class="mr-2"></i>Ventajas</h5>
+                            <div class="advantage-card"><span class="icon"><i data-lucide="check-circle"></i></span><span>Sigue el proceso natural de aprendizaje del lenguaje.</span></div>
+                            <div class="advantage-card"><span class="icon"><i data-lucide="check-circle"></i></span><span>Fomenta el aprendizaje significativo y la comprensión.</span></div>
+                            <div class="advantage-card"><span class="icon"><i data-lucide="check-circle"></i></span><span>Cumple con las leyes del aprendizaje (Efecto, Ejercicio, Asociación).</span></div>
+                            <div class="advantage-card"><span class="icon"><i data-lucide="check-circle"></i></span><span>Mantiene la motivación a través del diálogo y las imágenes.</span></div>
+                            <div class="advantage-card"><span class="icon"><i data-lucide="check-circle"></i></span><span>Desarrolla la percepción global y promueve la curiosidad.</span></div>
+                        </div>
+                        <div class="mt-8 md:mt-0">
+                            <h5 class="text-red-600 flex items-center"><i data-lucide="thumbs-down" class="mr-2"></i>Desventajas</h5>
+                            <div class="disadvantage-card"><span class="icon"><i data-lucide="x-circle"></i></span><span>Requiere un dominio profundo del método por parte del docente.</span></div>
+                            <div class="disadvantage-card"><span class="icon"><i data-lucide="x-circle"></i></span><span>Exige una cuidadosa selección de palabras para mantener la progresión.</span></div>
+                            <div class="disadvantage-card"><span class="icon"><i data-lucide="x-circle"></i></span><span>Riesgo de potenciar la lectura mecánica si se descuida la oralidad.</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-aplicacion" class="tab-pane" role="tabpanel">
+                    <h4>Guía de Aplicación Paso a Paso</h4>
+                    <div class="timeline-container">
+                        <ol>
+                            <li class="timeline-item"><div class="timeline-node">1</div><div class="timeline-card"><h6>Elección y Presentación</h6><p>Se parte de una palabra representada por un objeto (ej. "mesa") y se trabaja oralmente sobre su significado.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">2</div><div class="timeline-card"><h6>Copiado de la Palabra</h6><p>Una vez dialogado sobre el significado, se presenta la palabra y el alumno la copia.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">3</div><div class="timeline-card"><h6>Descomposición en Sílabas</h6><p>Se divide la palabra para que los alumnos vean que se puede descomponer (ej. "me-sa").</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">4</div><div class="timeline-card"><h6>Formación de Nuevas Palabras</h6><p>Con las sílabas de la palabra generadora, se forman nuevas palabras que tengan sentido y se puedan graficar.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">5</div><div class="timeline-card"><h6>Lectura de Palabras y Combinaciones</h6><p>Se lee la palabra generadora y las nuevas combinaciones que se pudieron armar.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">6</div><div class="timeline-card"><h6>Desglose por Tiempo y Sonidos</h6><p>Se desglosan las palabras por sílabas ("me-sa") y por fonemas ("m-e-s-a"), trabajando la conciencia fonológica.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">7</div><div class="timeline-card"><h6>Combinación de Sílabas</h6><p>Se extrae una letra (ej. "m") y se combina con las vocales para formar las sílabas ("ma, me, mi, mo, mu").</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">8</div><div class="timeline-card"><h6>Integración de Lectura y Escritura</h6><p>Todo el proceso se trabaja de manera que la lectura y la escritura estén unidas y se desarrollen simultáneamente.</p></div></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="tab-evaluacion" class="tab-pane" role="tabpanel">
+                    <h4>Evaluación y Video</h4>
+                    <p class="mb-6">La evaluación se centra en la comprensión y la capacidad del niño para manipular las unidades del lenguaje de manera significativa.</p>
+                    <div class="visual-grid">
+                        <div class="visual-card"><div class="card__icon"><i data-lucide="eye"></i></div><h6>Observación del Proceso</h6><p>Evaluar cómo el niño participa en el diálogo, descompone las palabras y forma nuevas combinaciones.</p></div>
+                        <div class="visual-card"><div class="card__icon"><i data-lucide="pencil"></i></div><h6>Análisis de Producciones</h6><p>Revisar las nuevas palabras y frases que el niño es capaz de escribir a partir de las sílabas aprendidas.</p></div>
+                        <div class="visual-card"><div class="card__icon"><i data-lucide="message-circle-question"></i></div><h6>Lectura con Significado</h6><p>Pedir al niño que lea tanto la palabra generadora como las nuevas palabras formadas, observando si conecta la lectura con el significado.</p></div>
+                        <div class="visual-card"><div class="card__icon"><i data-lucide="puzzle"></i></div><h6>Juegos de Composición</h6><p>Utilizar tarjetas de sílabas para evaluar la creatividad y fluidez del niño al formar nuevas palabras.</p></div>
+                    </div>
+                    <h5 class="mt-8">Demostración en Video</h5>
+                    <p class="mb-4 text-sm text-gray-600">Este video tutorial desglosa el método de la palabra generadora, mostrando paso a paso cómo partir de una palabra y su imagen para descomponerla en sílabas y sonidos, y luego usar esas partes para construir nuevo vocabulario. Ofrece un análisis claro de sus ventajas y desventajas.</p>
+                    <div class="video-responsive-container mt-4">
+                        <iframe src="https://www.youtube.com/embed/pQ-8-HHO3eY" title="Demostración en video del Método de Palabras Generadoras" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-gris-oscuro text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+            <p class="text-xs mt-3">
+                &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. | 
+                <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cian-secundario hover:underline">
+                    Conecta en LinkedIn
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+    <script>
+        lucide.createIcons();
+
+        const tabsContainer = document.querySelector('[role="tablist"]');
+        const tabLinks = tabsContainer.querySelectorAll('[role="tab"]');
+        const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+
+        function switchTab(clickedTab) {
+            tabLinks.forEach(tab => {
+                tab.setAttribute('aria-selected', 'false');
+                tab.classList.remove('active');
+            });
+
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            clickedTab.setAttribute('aria-selected', 'true');
+            clickedTab.classList.add('active');
+
+            const targetPanelId = clickedTab.getAttribute('aria-controls');
+            const targetPanel = document.getElementById(targetPanelId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        }
+
+        tabLinks.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab(e.currentTarget);
+            });
+        });
+
+        // Initial load
+        if (tabsContainer.querySelector('[aria-selected="true"]')) {
+            switchTab(tabsContainer.querySelector('[aria-selected="true"]'));
+        }
+
+    </script>
+</body>
+</html>

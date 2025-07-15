@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Lectoescritura - Método Fonético</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --cian-secundario: #00AEEF;
+            --verde-ventaja: #28a745;
+            --rojo-desventaja: #dc3545;
+            --gris-oscuro: #212529;
+            --gris-claro: #F8F9FA;
+            --blanco: #FFFFFF;
+        }
+
+        body { 
+            font-family: 'Lato', sans-serif; 
+            color: var(--gris-oscuro); 
+            background-color: #E9ECEF;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
+        /* Left Navigation Panel */
+        .vertical-tabs-nav {
+            background-color: var(--gris-claro);
+            border-right: 1px solid #dee2e6;
+        }
+        .strategy-header {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--blanco);
+            background-color: var(--cian-secundario);
+        }
+        .header__icon svg { width: 48px; height: 48px; margin: 0 auto 0.5rem; }
+        .header__title { font-size: 1.25rem; font-weight: 700; }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            font-weight: 600;
+            color: #495057;
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-link:hover { background-color: #dee2e6; }
+        .tab-link.active {
+            background-color: var(--blanco);
+            color: var(--cian-secundario);
+            border-left-color: var(--cian-secundario);
+        }
+        .tab-link .tab-icon { margin-right: 0.75rem; }
+
+        /* Right Content Area */
+        .tab-content-area { background-color: var(--blanco); }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-pane.active { animation: fadeIn 0.4s ease-in-out; }
+
+        /* Content inside tabs */
+        .tab-pane h4 { font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .tab-pane h5 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .tab-pane p, .tab-pane li { line-height: 1.7; }
+        .tab-pane ul { list-style: none; padding: 0; }
+        
+        .info-card {
+            display: flex; align-items: center; margin-bottom: 1rem;
+            background-color: var(--gris-claro); padding: 1rem; border-radius: 0.5rem;
+        }
+        .info-card .icon { flex-shrink: 0; margin-right: 1rem; color: var(--cian-secundario); }
+        
+        blockquote {
+            margin-top: 1.5rem; padding: 1rem; background-color: #eef9ff;
+            border-left: 4px solid var(--cian-secundario); font-style: italic; color: #0c5460;
+            display: flex; align-items: center;
+        }
+        blockquote .icon { margin-right: 1rem; color: var(--cian-secundario); flex-shrink: 0; }
+
+        /* Criticisms Grid */
+        .criticism-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .criticism-card { background: var(--gris-claro); padding: 1.5rem; border-radius: 0.5rem; text-align: center; }
+        .criticism-card .card__icon svg { margin: 0 auto 1rem; width: 40px; height: 40px; }
+        .criticism-card.advantage .card__icon svg { color: var(--verde-ventaja); }
+        .criticism-card.disadvantage .card__icon svg { color: var(--rojo-desventaja); }
+        .criticism-card h6 { font-weight: 700; margin-bottom: 0.5rem; }
+        .criticism-card p { font-size: 0.9rem; line-height: 1.6; }
+
+        /* Timeline */
+        .timeline-container { position: relative; padding: 1rem 0; }
+        .timeline-container::after { content: ''; position: absolute; width: 4px; background-color: #e5e7eb; top: 0; bottom: 0; left: 18px; z-index: 1; }
+        .timeline-item { position: relative; padding-left: 60px; margin-bottom: 2rem; }
+        .timeline-node { position: absolute; left: 0; top: 0; width: 36px; height: 36px; background-color: var(--cian-secundario); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Poppins', sans-serif; z-index: 2; border: 4px solid var(--blanco);}
+        .timeline-card { background: var(--gris-claro); padding: 1.5rem; border-radius: 0.5rem; }
+        .timeline-card h6 { font-weight: 700; }
+        .timeline-card p { font-size: 0.9rem; color: #495057; }
+        
+        /* Evaluation Grid */
+        .evaluation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .evaluation-card { background: var(--gris-claro); padding: 1.5rem; border-radius: 0.5rem; text-align: center; }
+        .evaluation-card .card__icon svg { color: var(--cian-secundario); margin: 0 auto 1rem; width: 40px; height: 40px; }
+        .evaluation-card h6 { font-weight: 700; }
+        .evaluation-card p { font-size: 0.9rem; }
+
+        /* Video */
+        .video-responsive-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+        .video-responsive-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+            <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                <li><a href="fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                <li><a href="estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                <li><a href="tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                <li><a href="psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                <li><a href="bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+            </ul>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                <li><a href="fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                <li><a href="estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                <li><a href="tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                <li><a href="psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                <li><a href="bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <main class="flex-grow container mx-auto my-8">
+        <div class="md:grid md:grid-cols-12 gap-8">
+            <!-- Left Panel: Navigation -->
+            <nav class="vertical-tabs-nav md:col-span-4 lg:col-span-3 rounded-lg overflow-hidden shadow-lg h-fit" role="tablist" aria-orientation="vertical">
+                <div class="strategy-header">
+                    <div class="header__icon"><i data-lucide="audio-lines"></i></div>
+                    <h1 class="header__title">Método Fonético</h1>
+                </div>
+                <div class="p-2">
+                    <button class="tab-link w-full" role="tab" aria-selected="true" aria-controls="tab-fundamento"><span class="tab-icon"><i data-lucide="book-open"></i></span>Fundamento y Origen</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-criticas"><span class="tab-icon"><i data-lucide="brain-circuit"></i></span>Bases Psicológicas y Críticas</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-aplicacion"><span class="tab-icon"><i data-lucide="list-steps"></i></span>Guía de Aplicación</button>
+                    <button class="tab-link w-full" role="tab" aria-selected="false" aria-controls="tab-evaluacion"><span class="tab-icon"><i data-lucide="target"></i></span>Evaluación y Video</button>
+                </div>
+            </nav>
+
+            <!-- Right Panel: Content -->
+            <div class="tab-content-area md:col-span-8 lg:col-span-9 bg-white p-6 md:p-10 rounded-lg shadow-lg mt-8 md:mt-0">
+                
+                <div id="tab-fundamento" class="tab-pane" role="tabpanel">
+                    <h4>Fundamento Teórico</h4>
+                    <p>El Método Fonético, también conocido como Método Fónico, es un método de enseñanza de la lectoescritura de tipo sintético y tradicional. Su enfoque principal es la correspondencia entre el sonido (fonema) y su representación gráfica (grafema).</p>
+                    <h5 class="mt-6">El proceso consiste en:</h5>
+                    <ul class="space-y-3">
+                        <li class="info-card"><span class="icon"><i data-lucide="volume-2"></i></span><span>Partir de la enseñanza de la pronunciación de las letras (sus sonidos), no de sus nombres.</span></li>
+                        <li class="info-card"><span class="icon"><i data-lucide="image"></i></span><span>Utilizar ilustraciones con onomatopeyas para facilitar la asociación fonema-grafema.</span></li>
+                        <li class="info-card"><span class="icon"><i data-lucide="ear"></i></span><span>Enfocarse en la discriminación de los fonemas como unidad básica de la palabra sonora.</span></li>
+                        <li class="info-card"><span class="icon"><i data-lucide="cog"></i></span><span>Progresar de la mecánica de la lectura (descifrado) a la comprensión y, finalmente, a la lectura expresiva.</span></li>
+                    </ul>
+                    <blockquote class="historical-note">
+                        <span class="icon"><i data-lucide="landmark"></i></span>
+                        <strong>Origen:</strong> Se atribuye su origen a Juan Amós Comenio y su obra de 1658, "Orbis Pictus", el primer libro ilustrado para niños que presentaba un abecedario con sonidos de personas y animales.
+                    </blockquote>
+                </div>
+
+                <div id="tab-criticas" class="tab-pane" role="tabpanel">
+                    <h4>Bases Psicológicas y Críticas Académicas</h4>
+                    <p class="mb-6">Este método se apoya fuertemente en la conciencia fonológica, pero también enfrenta críticas por su enfoque mecanicista.</p>
+                    <div class="criticism-grid">
+                        <div class="criticism-card advantage"><div class="card__icon"><i data-lucide="check-circle"></i></div><h6>Conciencia Fonológica</h6><p>Se considera un predictor clave en la adquisición de la lectoescritura, aunque requiere una preparación explícita y progresiva.</p></div>
+                        <div class="criticism-card disadvantage"><div class="card__icon"><i data-lucide="x-circle"></i></div><h6>Proceso Mecanicista</h6><p>Es un método lento y memorístico, basado en la asociación de respuestas sonoras a estímulos gráficos, lo que puede desmotivar.</p></div>
+                        <div class="criticism-card disadvantage"><div class="card__icon"><i data-lucide="x-circle"></i></div><h6>Enfoque Antinatural</h6><p>Al partir de elementos abstractos y sin significado, contradice la percepción global de los niños y puede descuidar el gusto por la lectura.</p></div>
+                        <div class="criticism-card disadvantage"><div class="card__icon"><i data-lucide="x-circle"></i></div><h6>Alta Demanda Cognitiva</h6><p>Requiere un alto grado de reestructuración de la información y control atencional para segmentar el lenguaje.</p></div>
+                        <div class="criticism-card disadvantage"><div class="card__icon"><i data-lucide="x-circle"></i></div><h6>Complejidad Ortográfica</h6><p>La insistencia en una correspondencia unívoca grafema-fonema es una "pretensión absurda" que ignora la complejidad real de la ortografía.</p></div>
+                        <div class="criticism-card disadvantage"><div class="card__icon"><i data-lucide="x-circle"></i></div><h6>Riesgo Ideológico</h6><p>La imposición de una "pronunciación correcta" puede ignorar las variantes dialectales y promover una discriminación lingüística.</p></div>
+                    </div>
+                </div>
+
+                <div id="tab-aplicacion" class="tab-pane" role="tabpanel">
+                    <h4>Guía de Aplicación Paso a Paso</h4>
+                    <div class="timeline-container">
+                        <ol>
+                            <li class="timeline-item"><div class="timeline-node">1</div><div class="timeline-card"><h6>Aislamiento y Reconocimiento de Fonemas</h6><p>El niño debe ser capaz de aislar y reconocer los distintos fonemas de su lengua, con énfasis en el análisis auditivo.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">2</div><div class="timeline-card"><h6>Asociación Fonema-Grafema</h6><p>Se asocia cada sonido a su representación gráfica, enseñando un par a la vez hasta que la asociación esté bien fijada.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">3</div><div class="timeline-card"><h6>Uso de Apoyos Visuales y Gestuales</h6><p>Se pueden usar ilustraciones onomatopéyicas y asociar a cada fonema una expresión gestual.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">4</div><div class="timeline-card"><h6>Inicio con Ortografía Regular</h6><p>Se recomienda empezar con palabras donde la grafía coincida con la pronunciación para evitar confusiones.</p></div></li>
+                            <li class="timeline-item"><div class="timeline-node">5</div><div class="timeline-card"><h6>Progresión a Sílabas y Palabras</h6><p>Una vez dominada la pronunciación de las letras, se pasa a la formación de sílabas y, posteriormente, palabras.</p></div></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="tab-evaluacion" class="tab-pane" role="tabpanel">
+                    <h4>Evaluación y Video</h4>
+                    <p class="mb-6">La evaluación debe ser un proceso continuo para comprender los procesos de conceptualización del niño. Se pueden emplear las siguientes estrategias:</p>
+                    <div class="evaluation-grid">
+                        <div class="evaluation-card"><div class="card__icon"><i data-lucide="eye"></i></div><h6>Observación Directa</h6><p>Atender al proceso de ejecución, desarrollo psicomotriz, percepción y motivación del niño.</p></div>
+                        <div class="evaluation-card"><div class="card__icon"><i data-lucide="pencil"></i></div><h6>Análisis de Producciones</h6><p>Identificar "errores constructivos" y evaluar caligrafía, estructura y cohesión.</p></div>
+                        <div class="evaluation-card"><div class="card__icon"><i data-lucide="ear"></i></div><h6>Dictados Cortos</h6><p>Evaluar la capacidad para analizar estímulos sonoros y activar representaciones ortográficas.</p></div>
+                        <div class="evaluation-card"><div class="card__icon"><i data-lucide="mic"></i></div><h6>Lectura en Voz Alta</h6><p>Medir velocidad, exactitud y expresión, y observar si el niño dota de sentido a lo que lee.</p></div>
+                    </div>
+                    <h5 class="mt-8">Demostración en Video</h5>
+                    <p class="mb-4 text-sm text-gray-600">Este video tutorial del canal 'Aprendemos de TODO' explica el método fonético, mostrando su aplicación paso a paso, desde la enseñanza del sonido de las letras hasta la formación de palabras. Ofrece un análisis claro de sus ventajas, como el desarrollo de la conciencia fonológica, y sus desventajas, como su enfoque mecanicista.</p>
+                    <div class="video-responsive-container mt-4">
+                        <iframe src="https://www.youtube.com/embed/04SN5lRrqDA" title="Demostración en video del Método Fonético" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-gris-oscuro text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+            <p class="text-xs mt-3">
+                &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. | 
+                <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cian-secundario hover:underline">
+                    Conecta en LinkedIn
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+    <script>
+        lucide.createIcons();
+
+        const tabsContainer = document.querySelector('[role="tablist"]');
+        const tabLinks = tabsContainer.querySelectorAll('[role="tab"]');
+        const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+
+        function switchTab(clickedTab) {
+            tabLinks.forEach(tab => {
+                tab.setAttribute('aria-selected', 'false');
+                tab.classList.remove('active');
+            });
+
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            clickedTab.setAttribute('aria-selected', 'true');
+            clickedTab.classList.add('active');
+
+            const targetPanelId = clickedTab.getAttribute('aria-controls');
+            const targetPanel = document.getElementById(targetPanelId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        }
+
+        tabLinks.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab(e.currentTarget);
+            });
+        });
+
+        // Initial load
+        if (tabsContainer.querySelector('[aria-selected="true"]')) {
+            switchTab(tabsContainer.querySelector('[aria-selected="true"]'));
+        }
+
+    </script>
+</body>
+</html>

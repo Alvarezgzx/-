@@ -1,0 +1,6 @@
+{
+  "name": "Copy of Generador de Planes de Clase de Lectoescritura",
+  "description": "Una aplicación inteligente que crea planes de clase de lectoescritura personalizados utilizando el 'Playbook de Lectoescritura' como base de conocimiento. El usuario introduce la edad, el número de sesiones y el objetivo, y la IA genera una guía didáctica detallada con métodos, actividades y recursos apropiados.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

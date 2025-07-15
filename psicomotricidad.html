@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo Interactivo: La Base del Trazo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados y configuración de Tailwind */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f9fafb;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        /* Paleta de colores */
+        .strategy-header--mixto {
+            background-color: #FFC107; /* Amarillo Vibrante */
+            color: #424242; /* Gris oscuro para contraste */
+        }
+        .tab-link.active {
+            background-color: #FFC107;
+            color: #424242;
+            border-right: 4px solid #FFA000;
+        }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos para la Línea de Tiempo */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 18px;
+            height: 100%;
+            width: 4px;
+            background: #e2e8f0; /* gray-200 */
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 3rem;
+        }
+        .timeline-node {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #FFC107;
+            color: #424242;
+            font-weight: 700;
+            border: 4px solid white;
+            box-shadow: 0 0 0 3px #FFC107;
+        }
+        .info-card, .activity-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .activity-card {
+            cursor: pointer;
+        }
+        .info-card:hover, .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link.active { color: #E4007C; font-weight: 700; }
+        .nav-link.active .emoji-icon { transform: scale(1.2); }
+        .emoji-icon { font-size: 1.25rem; transition: transform 0.3s ease; }
+
+        /* Estilos para el Modal (Pop-up) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            position: relative;
+            overflow: hidden; /* Clave para que el fondo no se salga de los bordes redondeados */
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+         .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        #modal-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px) brightness(0.8);
+            transform: scale(1.1);
+            z-index: -1;
+            transition: background-image 0.3s ease-in-out;
+        }
+        .modal-body-container {
+            background-color: var(--modal-bg-color, rgba(255, 255, 255, 0.85));
+            padding: 1.5rem;
+            height: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-width: 2px;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-color: var(--modal-border-color, #ccc);
+        }
+        .modal-title {
+            font-size: 1.75rem;
+            color: var(--modal-header-text-color, #000);
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            color: var(--modal-header-text-color, #000);
+        }
+        .modal-body h6 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--modal-header-text-color, #000);
+        }
+        .modal-body p, .modal-body li {
+            line-height: 1.6;
+            color: var(--modal-text-color, #333);
+        }
+        .modal-body ul {
+            list-style-type: '✓';
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .modal-footer {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--modal-text-color, #333);
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+            <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                <li><a href="fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                <li><a href="estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                <li><a href="tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                <li><a href="psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                <li><a href="bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+            </ul>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                <li><a href="fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                <li><a href="estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                <li><a href="tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                <li><a href="psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                <li><a href="bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <main class="flex-grow">
+        <div class="strategy-detail-page-interactive flex flex-col md:flex-row bg-white">
+
+            <!-- ======================================================= -->
+            <!-- COLUMNA IZQUIERDA: MENÚ DE NAVEGACIÓN POR PESTAÑAS      -->
+            <!-- ======================================================= -->
+            <nav class="vertical-tabs-nav w-full md:w-1/4 lg:w-1/5 bg-gray-50 border-r border-gray-200 flex flex-col" role="tablist" aria-orientation="vertical">
+                <div class="strategy-header strategy-header--mixto p-6 text-center">
+                    <h1 class="header__title text-2xl font-bold">La Base del Trazo</h1>
+                    <p class="text-sm mt-2">Módulo de Grafomotricidad</p>
+                </div>
+                <div class="flex-grow p-4">
+                    <button class="tab-link w-full text-left p-4 rounded-lg font-semibold flex items-center gap-3 transition-all duration-300 active" role="tab" aria-selected="true" aria-controls="tab-proposito">
+                        <span class="tab-icon text-xl">🎯</span> Propósito e Importancia
+                    </button>
+                    <button class="tab-link w-full text-left p-4 rounded-lg font-semibold flex items-center gap-3 transition-all duration-300" role="tab" aria-selected="false" aria-controls="tab-actividades">
+                        <span class="tab-icon text-xl">🛠️</span> Banco de Actividades
+                    </button>
+                    <button class="tab-link w-full text-left p-4 rounded-lg font-semibold flex items-center gap-3 transition-all duration-300" role="tab" aria-selected="false" aria-controls="tab-claves">
+                        <span class="tab-icon text-xl">🔑</span> Claves de Implementación
+                    </button>
+                </div>
+            </nav>
+
+            <!-- ============================================================= -->
+            <!-- COLUMNA DERECHA: ÁREA DE CONTENIDO DINÁMICO DE LAS PESTAÑAS -->
+            <!-- ============================================================= -->
+            <div class="tab-content-area w-full md:w-3/4 lg:w-4/5 p-6 md:p-10 lg:p-12 overflow-y-auto">
+
+                <!-- Contenido Pestaña 1: Propósito e Importancia (Activa por defecto) -->
+                <div id="tab-proposito" class="tab-pane active" role="tabpanel">
+                    <h4 class="text-3xl font-bold text-gray-800 mb-4">Propósito e Importancia de las Actividades Grafomotrices</h4>
+                    <p class="text-lg text-gray-600 mb-8">Las actividades grafomotrices son ejercicios fundamentales para el desarrollo de la motricidad fina. Entrenan los movimientos básicos de la lectoescritura, fortaleciendo los músculos finos y la coordinación necesaria para escribir con fluidez y precisión.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="info-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                            <div class="card__icon text-4xl mb-3 text-yellow-500">💪</div>
+                            <h6 class="text-xl font-semibold mb-2">Desarrollo de Motricidad Fina</h6>
+                            <p class="text-gray-600">Fortalece los músculos de la mano, muñeca y dedos, esenciales para acciones coordinadas que involucran la vista y el tacto.</p>
+                        </div>
+                        <div class="info-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                            <div class="card__icon text-4xl mb-3 text-yellow-500">✏️</div>
+                            <h6 class="text-xl font-semibold mb-2">Preparación para la Escritura</h6>
+                            <p class="text-gray-600">Aporta la correcta direccionalidad, precisión de movimientos, prensión del lápiz y coordinación óculo-manual.</p>
+                        </div>
+                        <div class="info-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                            <div class="card__icon text-4xl mb-3 text-yellow-500">🤏</div>
+                            <h6 class="text-xl font-semibold mb-2">Fortalecimiento de Habilidades</h6>
+                            <p class="text-gray-600">Mejora la pinza digital, la memoria, la atención y la organización, estimulando el pensamiento y la creatividad.</p>
+                        </div>
+                        <div class="info-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                            <div class="card__icon text-4xl mb-3 text-yellow-500">🛡️</div>
+                            <h6 class="text-xl font-semibold mb-2">Prevención de Dificultades</h6>
+                            <p class="text-gray-600">Un adecuado trabajo grafomotriz puede prevenir futuros problemas de lectoescritura, asegurando mejores resultados en la caligrafía.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido Pestaña 2: Banco de Actividades -->
+                <div id="tab-actividades" class="tab-pane" role="tabpanel">
+                    <h4 class="text-3xl font-bold text-gray-800 mb-4">Banco de Actividades Grafomotrices</h4>
+                    <p class="text-lg text-gray-600 mb-8">El empleo de actividades físicas, lúdicas y grafoplásticas es fundamental para desarrollar habilidades motoras finas. <strong>Haz clic en cada actividad para ver más detalles.</strong></p>
+                    
+                    <h5 class="text-2xl font-semibold text-gray-700 mt-8 mb-4">Actividades de Manipulación Fina</h5>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                        <!-- Rasgado y Trozado -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="rasgado">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/rasgado.webp" alt="Actividad de rasgado de papel" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Rasgado y Trozado</span></div>
+                        </button>
+                        <!-- Punzado -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="punzado">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/punzado.webp" alt="Actividad de punzado" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Punzado</span></div>
+                        </button>
+                        <!-- Abotonar -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="abotonar">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/abotonar.webp" alt="Actividad de abotonar" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Abotonar</span></div>
+                        </button>
+                        <!-- Subir Cierres -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="cierres">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/cierres.webp" alt="Actividad de subir cierres" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Subir Cierres</span></div>
+                        </button>
+                        <!-- Modelado -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="modelado">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/modelado.webp" alt="Actividad de modelado con plastilina" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Modelado</span></div>
+                        </button>
+                    </div>
+
+                    <h5 class="text-2xl font-semibold text-gray-700 mt-8 mb-4">Actividades de Trazo y Dibujo</h5>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                        <!-- Pintura y Coloreado -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="pintura">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/pintura.webp" alt="Actividad de pintura y coloreado" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Pintura y Coloreado</span></div>
+                        </button>
+                        <!-- Recorte -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="recorte">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/recorte.webp" alt="Actividad de recorte con tijeras" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Recorte</span></div>
+                        </button>
+                        <!-- Trazos Libres -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="trazos">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/trazos-libres.webp" alt="Actividad de trazos libres" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Trazos Libres</span></div>
+                        </button>
+                        <!-- Juego con Lanas -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="lanas">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/juego-lanas.webp" alt="Actividad de juego con lanas" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Juego con Lanas</span></div>
+                        </button>
+                        <!-- Repasar con el Dedo -->
+                        <button class="activity-card bg-white rounded-xl shadow-lg overflow-hidden" data-activity="dedo">
+                            <img src="https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/repasar.webp" alt="Actividad de repasar con el dedo" class="w-full h-32 object-cover">
+                            <div class="p-4"><span class="font-semibold">Repasar con el Dedo</span></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contenido Pestaña 3: Claves de Implementación -->
+                <div id="tab-claves" class="tab-pane" role="tabpanel">
+                    <h4 class="text-3xl font-bold text-gray-800 mb-8">Claves para una Implementación Exitosa</h4>
+                    <div class="timeline-container">
+                        <div class="timeline-item">
+                            <div class="timeline-node">1</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Estimulación Prioritaria</h5>
+                                <p class="text-gray-600">Es fundamental estimular la motricidad fina en el nivel inicial para facilitar la autonomía del niño en sus actividades cotidianas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-node">2</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Adaptación a la Edad</h5>
+                                <p class="text-gray-600">La planificación debe ajustarse a la edad y necesidades del niño, avanzando de tareas simples a otras más complejas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-node">3</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Materiales y Experiencias</h5>
+                                <p class="text-gray-600">Es crucial complementar las actividades con materiales y experiencias vividas por los niños para darles contexto.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-node">4</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Rol del Docente y la Familia</h5>
+                                <p class="text-gray-600">Tanto docentes como familias tienen la responsabilidad de aplicar y fomentar estas actividades desde la escuela y el hogar.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-node">5</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Evitar la Monotonía</h5>
+                                <p class="text-gray-600">Es importante innovar constantemente en las estrategias para evitar el desinterés que puede generar la repetición.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-node">6</div>
+                            <div class="timeline-card bg-white p-6 rounded-xl shadow-lg">
+                                <h5 class="text-xl font-semibold mb-2">Más Allá de la Copia</h5>
+                                <p class="text-gray-600">La mera repetición de rasgos en un cuaderno no desarrolla habilidades de preescritura; la actividad debe ser significativa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal Structure -->
+    <div id="activity-modal" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <div id="modal-bg-image"></div>
+            <div class="modal-body-container">
+                <div id="modal-header" class="modal-header">
+                    <h5 id="modal-title" class="modal-title"></h5>
+                    <button id="modal-close" class="modal-close-btn">&times;</button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    <h6>¿En qué consiste?</h6>
+                    <p id="modal-description"></p>
+                    <h6>Beneficios</h6>
+                    <ul id="modal-benefits"></ul>
+                    <h6>Aspectos Clave de Implementación</h6>
+                    <ul id="modal-implementation"></ul>
+                    <div id="modal-footer" class="modal-footer">
+                        <p><strong>Fuentes:</strong> <span id="modal-sources"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footerclass="bg-gris-oscuro text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+            <p class="text-xs mt-3">
+                &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. | 
+                <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cyan-400 hover:underline">
+                    Conecta en LinkedIn
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA FOR MODALS ---
+            const activityData = {
+                rasgado: {
+                    title: "📜 Rasgado y Trozado",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/rasgado.webp",
+                    description: "Es una actividad práctica que implica romper papel con los dedos, sin usar tijeras. El 'rasgado' se refiere a crear tiras o pedazos, mientras que el 'trozado' es hacer pedazos más pequeños a partir del papel ya rasgado.",
+                    benefits: ["Estimula los músculos pequeños de las manos y los dedos.", "Desarrolla la coordinación viso-motora (ojo-mano).", "Al combinarse con el juego, se logra una mayor motivación en el niño.", "Fomenta la pinza digital, crucial para la correcta sujeción de instrumentos de escritura."],
+                    implementation: ["Utilizar diversos tipos de papel (textura, grosor, color) para enriquecer la experiencia sensorial.", "Proponer al niño rellenar una figura con los trozos de papel para integrar un objetivo artístico."],
+                    sources: "Cayllahua et al. (2024), Pucha-Quinchuela (2024).",
+                    color: { bg: 'rgba(224, 242, 254, 0.9)', border: '#7dd3fc', text: '#075985', headerText: '#0c4a6e' } // Sky
+                },
+                punzado: {
+                    title: "🕳️ Punzado",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/punzado.webp",
+                    description: "Consiste en perforar con un punzón una figura o línea dibujada sobre una superficie blanda (como foamy o corcho), siguiendo el contorno.",
+                    benefits: ["Ayuda al niño a desarrollar su motricidad fina, estimulando los pequeños músculos de la mano.", "Mejora la coordinación viso-motora y la concentración.", "Favorece el dominio de la presión y la precisión en los movimientos manuales."],
+                    implementation: ["Garantizar la seguridad del niño supervisando el uso adecuado del punzón.", "Comenzar con figuras simples y progresar hacia diseños más complejos."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(204, 251, 241, 0.9)', border: '#5eead4', text: '#115e59', headerText: '#0f766e' } // Teal
+                },
+                abotonar: {
+                    title: "🔘 Abotonar y Desabotonar",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/abotonar.webp",
+                    description: "Actividades cotidianas que consisten en manipular botones para pasarlos por ojales.",
+                    benefits: ["Son indicadores del desarrollo de la habilidad motora fina.", "Facilitan la autonomía del niño en actividades diarias como vestirse.", "Mejoran la destreza de los dedos y la coordinación bimanual."],
+                    implementation: ["Puede ser parte de una propuesta implementada con apoyo en el hogar.", "Utilizar bastidores o marcos de vestir con botones grandes para facilitar la práctica."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(224, 231, 255, 0.9)', border: '#a5b4fc', text: '#3730a3', headerText: '#4338ca' } // Indigo
+                },
+                 cierres: {
+                    title: "🤐 Subir Cierres",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/cierres.webp",
+                    description: "Actividad cotidiana que consiste en deslizar el carro de un cierre (cremallera).",
+                    benefits: ["Son indicadores del desarrollo de la habilidad motora fina.", "Facilitan la autonomía del niño en actividades diarias como vestirse.", "Mejoran la destreza de los dedos y la coordinación bimanual."],
+                    implementation: ["Puede ser parte de una propuesta implementada con apoyo en el hogar.", "Utilizar bastidores o marcos de vestir con cierres visibles para facilitar la práctica."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(243, 232, 255, 0.9)', border: '#d8b4fe', text: '#6b21a8', headerText: '#7e22ce' } // Purple
+                },
+                modelado: {
+                    title: "🏺 Modelado",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/modelado.webp",
+                    description: "Actividad que implica el uso de materiales maleables como plastilina o arcilla para crear figuras. Permite a los niños experimentar con formas, volúmenes y trazos.",
+                    benefits: ["Fortalece la musculatura de las manos y los dedos.", "Estimula la creatividad, la imaginación y la capacidad de representación simbólica.", "Fomenta la comprensión del entorno y la gestión de emociones."],
+                    implementation: ["Ofrecer materiales de diferentes texturas y colores.", "La planificación debe ajustarse a la edad del niño, comenzando con tareas menos complejas."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(255, 237, 213, 0.9)', border: '#fdba74', text: '#9a3412', headerText: '#c2410c' } // Orange
+                },
+                pintura: {
+                    title: "🎨 Pintura y Coloreado",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/pintura.webp",
+                    description: "Técnicas grafoplásticas donde el niño utiliza instrumentos como lápices, crayolas o pinceles para aplicar color sobre una superficie, ya sea de forma libre (pintura) o rellenando un contorno (coloreado).",
+                    benefits: ["Mejora el movimiento de las extremidades superiores y la destreza visual-manual.", "Facilita el agarre y movimiento adecuado de los útiles escolares.", "Fomenta la creatividad, la imaginación y la capacidad de expresión artística."],
+                    implementation: ["Emplear diversas prácticas pedagógicas, tanto en las áreas correspondientes como en acciones independientes.", "Innovar con las técnicas, como pintar sobre papel aluminio, para evitar la monotonía."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(255, 228, 230, 0.9)', border: '#fda4af', text: '#9f1239', headerText: '#be123c' } // Rose
+                },
+                recorte: {
+                    title: "✂️ Recorte",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/recorte.webp",
+                    description: "Es el uso de instrumentos, principalmente tijeras, para cortar papel u otros materiales. Es considerada una actividad motora clave y un indicador de la habilidad motora fina.",
+                    benefits: ["Desarrolla la coordinación óculo-manual y el control de los movimientos precisos de la mano.", "Fortalece los músculos necesarios para la apertura y cierre de la mano.", "Su aplicación en la práctica pedagógica demuestra resultados positivos."],
+                    implementation: ["Comenzar con tijeras de seguridad y cortes rectos antes de avanzar a líneas curvas.", "Asegurar una supervisión constante por parte del docente."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(220, 252, 231, 0.9)', border: '#86efac', text: '#166534', headerText: '#15803d' } // Green
+                },
+                trazos: {
+                    title: "〰️ Trazos Libres",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/trazos-libres.webp",
+                    description: "Es un movimiento gráfico realizado con la mano antes de llegar a la escritura formal. Incluye la ejecución de líneas libres, verticales, horizontales, en círculos, bucles o combinadas.",
+                    benefits: ["Entrena de forma efectiva los movimientos básicos de la lectoescritura.", "Mejora la direccionalidad, la maduración de los movimientos finos y la coordinación.", "Fortalece los músculos que intervienen en el agarre de los instrumentos de escritura."],
+                    implementation: ["Superar la mera repetición de rasgos; la actividad debe ser significativa.", "Utilizar diversos materiales (dedos sobre arena, tiza, lápices) para diversificar la experiencia."],
+                    sources: "Pucha-Quinchuela (2024).",
+                    color: { bg: 'rgba(254, 243, 199, 0.9)', border: '#fcd34d', text: '#92400e', headerText: '#b45309' } // Amber
+                },
+                lanas: {
+                    title: "🧶 Juego con Lanas",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/juego-lanas.webp",
+                    description: "Actividad de manipulación que implica usar lanas o hilos para actividades como enhebrar o anudar, considerada un indicador de la habilidad motora fina.",
+                    benefits: ["Desarrolla la pinza digital y la precisión en los movimientos de los dedos.", "Fomenta la concentración y la coordinación ojo-mano de manera lúdica.", "Cuando se suma el juego, se logra una mayor motivación y se afianza la personalidad del niño."],
+                    implementation: ["Utilizar lanas de diferentes grosores y colores, y agujas de punta roma para enhebrar.", "Promover la participación activa de los niños a través de actividades nuevas y motivadoras."],
+                    sources: "Cayllahua et al. (2024).",
+                    color: { bg: 'rgba(236, 252, 203, 0.9)', border: '#bef264', text: '#4d7c0f', headerText: '#65a30d' } // Lime
+                },
+                dedo: {
+                    title: "👆 Repasar con el Dedo",
+                    imageUrl: "https://raw.githubusercontent.com/Alvarezgzx/PlaybookLectoescritura/9c0194fa6b461d7026c7292cf0488b78de4b2e87/repasar.webp",
+                    description: "Es una técnica sensorial donde el niño sigue con su dedo el contorno de formas y grafías. El aprendizaje se da a través del movimiento y la manipulación.",
+                    benefits: ["Involucra el sentido del tacto, lo que refuerza la memoria motriz del trazo.", "Contribuye a la correcta direccionalidad y a la interiorización de la forma de las grafías.", "Fomenta la coordinación entre los sistemas neurológicos y musculares."],
+                    implementation: ["Crear un set de letras o figuras con diferentes texturas (lija, relieve).", "Verbalizar el trazo mientras el niño lo repasa para reforzar el aprendizaje."],
+                    sources: "Cayllahua et al. (2024), Pucha-Quinchuela (2024).",
+                    color: { bg: 'rgba(207, 250, 254, 0.9)', border: '#67e8f9', text: '#155e75', headerText: '#0891b2' } // Cyan
+                }
+            };
+
+            // --- TAB & MENU LOGIC ---
+            const tabs = document.querySelectorAll('.tab-link');
+            const panes = document.querySelectorAll('.tab-pane');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panes.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    const targetPane = document.getElementById(tab.getAttribute('aria-controls'));
+                    if (targetPane) {
+                        targetPane.classList.add('active');
+                    }
+                });
+            });
+
+            // --- MODAL LOGIC ---
+            const modal = document.getElementById('activity-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalBgImage = document.getElementById('modal-bg-image');
+            const modalBodyContainer = document.querySelector('.modal-body-container');
+            const modalHeader = document.getElementById('modal-header');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const modalBenefits = document.getElementById('modal-benefits');
+            const modalImplementation = document.getElementById('modal-implementation');
+            const modalSources = document.getElementById('modal-sources');
+            const closeModalBtn = document.getElementById('modal-close');
+            const activityCards = document.querySelectorAll('.activity-card');
+
+            function openModal(activityId) {
+                const data = activityData[activityId];
+                if (!data) return;
+
+                // Set background image
+                modalBgImage.style.backgroundImage = `url('${data.imageUrl}')`;
+
+                // Apply colors using CSS variables
+                const root = document.documentElement;
+                root.style.setProperty('--modal-bg-color', data.color.bg);
+                root.style.setProperty('--modal-border-color', data.color.border);
+                root.style.setProperty('--modal-text-color', data.color.text);
+                root.style.setProperty('--modal-header-text-color', data.color.headerText);
+
+                // Populate content
+                modalTitle.innerHTML = data.title;
+                modalDescription.textContent = data.description;
+                
+                modalBenefits.innerHTML = '';
+                data.benefits.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    modalBenefits.appendChild(li);
+                });
+
+                modalImplementation.innerHTML = '';
+                 data.implementation.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    modalImplementation.appendChild(li);
+                });
+
+                modalSources.textContent = data.sources;
+                modal.classList.add('visible');
+            }
+
+            function closeModal() {
+                modal.classList.remove('visible');
+            }
+
+            activityCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const activityId = card.dataset.activity;
+                    openModal(activityId);
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

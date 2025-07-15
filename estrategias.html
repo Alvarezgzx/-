@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Lectoescritura - Métodos de Enseñanza</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --magenta-principal: #E4007C;
+            --cian-secundario: #00AEEF;
+            --amarillo-vibrante: #FFC107;
+            --gris-oscuro: #212529;
+            --gris-claro: #F8F9FA;
+            --blanco: #FFFFFF;
+        }
+
+        body { font-family: 'Lato', sans-serif; color: var(--gris-oscuro); background-color: var(--blanco); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-lato { font-family: 'Lato', sans-serif; }
+        
+        /* Navigation Link Styles */
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link.active { color: var(--magenta-principal); font-weight: 700; }
+        .nav-link.active .emoji-icon { transform: scale(1.2); }
+        .emoji-icon { font-size: 1.25rem; transition: transform 0.3s ease; }
+
+
+        /* Dynamic Header */
+        .dynamic-header {
+            transition: background-color 0.4s ease, color 0.4s ease;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            color: var(--blanco);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        /* Strategy Card Styles */
+        .strategy-card {
+             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+             color: var(--blanco);
+             border: 4px solid transparent;
+        }
+        
+        /* Active state for card */
+        .strategy-card.active {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        .strategy-card.active--sintetico { border-color: var(--cian-secundario); }
+        .strategy-card.active--analitico { border-color: var(--magenta-principal); }
+        .strategy-card.active--mixto { border-color: var(--amarillo-vibrante); }
+        
+        .card-icon {
+            font-size: 3rem;
+        }
+        
+        /* Card Color Classifications */
+        .strategy-card--sintetico { background-color: var(--cian-secundario); }
+        .strategy-card--analitico { background-color: var(--magenta-principal); }
+        .strategy-card--mixto { background-color: var(--amarillo-vibrante); color: var(--gris-oscuro); }
+        
+        /* CTA Button Styles */
+        .card-cta-button {
+            background-color: rgba(0,0,0,0.15);
+            transition: background-color 0.2s ease;
+        }
+        .card-cta-button:hover { background-color: rgba(0,0,0,0.3); }
+
+        /* Specific CTA for Mixto for better contrast */
+        .strategy-card--mixto .card-cta-button {
+            background-color: var(--gris-oscuro);
+            color: var(--blanco);
+        }
+        .strategy-card--mixto .card-cta-button:hover {
+            background-color: black;
+        }
+
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header & Navigation -->
+   <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+            <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                <li><a href="fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                <li><a href="estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                <li><a href="tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                <li><a href="psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                <li><a href="bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+            </ul>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                <li><a href="fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                <li><a href="estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                <li><a href="tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                <li><a href="psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                <li><a href="bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <main class="flex-grow container mx-auto px-6 py-12 md:py-20">
+        <div class="text-center mb-12">
+            <span class="text-6xl">📚</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-gris-oscuro mt-4">Galería Interactiva de Métodos de Enseñanza</h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Pasa el cursor sobre una tarjeta para identificar su enfoque pedagógico. ¡Haz clic para ver los detalles!</p>
+        </div>
+
+        <!-- Dynamic Classification Header -->
+        <div id="classification-header" class="dynamic-header" style="background-color: var(--gris-claro); color: var(--gris-oscuro);" aria-live="polite">
+            <span id="classification-text">Selecciona un método</span>
+        </div>
+
+        <!-- Interactive Grid -->
+        <div id="strategy-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- SINTÉTICOS -->
+            <div class="strategy-card strategy-card--sintetico rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Sintético" data-color="#00AEEF" data-active-class="active--sintetico">
+                <div class="card-icon mx-auto mb-4">🔠</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método Alfabético</h3>
+                <p class="text-center text-sm flex-grow">Parte de memorizar el abecedario y el nombre de cada letra para construir palabras.</p>
+                <a href="metodo-alfabetico.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+            <div class="strategy-card strategy-card--sintetico rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Sintético" data-color="#00AEEF" data-active-class="active--sintetico">
+                <div class="card-icon mx-auto mb-4">🗣️</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método Fonético</h3>
+                <p class="text-center text-sm flex-grow">Enfoca el aprendizaje en la relación entre el sonido (fonema) y su símbolo escrito (grafema).</p>
+                <a href="metodo-fonetico.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+            <div class="strategy-card strategy-card--sintetico rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Sintético" data-color="#00AEEF" data-active-class="active--sintetico">
+                <div class="card-icon mx-auto mb-4">🧱</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método Silábico</h3>
+                <p class="text-center text-sm flex-grow">Toma la sílaba como la unidad de aprendizaje principal para componer palabras.</p>
+                <a href="metodo-silabico.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+            <div class="strategy-card strategy-card--sintetico rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Sintético" data-color="#00AEEF" data-active-class="active--sintetico">
+                <div class="card-icon mx-auto mb-4">🖼️</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método Glenn Doman</h3>
+                <p class="text-center text-sm flex-grow">Enseña palabras completas mediante estimulación visual para fomentar la memoria fotográfica.</p>
+                <a href="metodo-glenn-doman.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+
+            <!-- ANALÍTICOS -->
+            <div class="strategy-card strategy-card--analitico rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Analítico" data-color="#E4007C" data-active-class="active--analitico">
+                <div class="card-icon mx-auto mb-4">💬</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método Global</h3>
+                <p class="text-center text-sm flex-grow">Inicia con frases completas para priorizar la comprensión, descomponiéndolas luego en sus elementos.</p>
+                <a href="metodo-global.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+
+            <!-- MIXTO -->
+            <div class="strategy-card strategy-card--mixto rounded-lg shadow-md p-6 h-full flex flex-col" data-classification="Enfoque Mixto" data-color="#FFC107" data-active-class="active--mixto">
+                <div class="card-icon mx-auto mb-4">🔍</div>
+                <h3 class="text-xl font-bold text-center mb-2">Método de Palabras Generadoras</h3>
+                <p class="text-center text-sm flex-grow">Combina el análisis de una palabra significativa con la síntesis de nuevas palabras a partir de sus partes.</p>
+                <a href="metodo-palabras-normales.html" class="card-cta-button mt-6 block w-full text-center py-2.5 rounded-lg font-semibold">Ver Detalles</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-gris-oscuro text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+            <p class="text-xs mt-3">
+                &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. | 
+                <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cian-secundario hover:underline">
+                    Conecta en LinkedIn
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Interactive Grid Logic
+        const grid = document.getElementById('strategy-grid');
+        const cards = grid.querySelectorAll('.strategy-card');
+        const classificationHeader = document.getElementById('classification-header');
+        const classificationText = document.getElementById('classification-text');
+        const defaultHeaderText = 'Selecciona un método';
+        const defaultHeaderColor = 'var(--gris-claro)';
+        const defaultHeaderTextColor = 'var(--gris-oscuro)';
+
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Remove active class from all other cards
+                cards.forEach(c => {
+                    c.classList.remove('active', 'active--sintetico', 'active--analitico', 'active--mixto');
+                });
+
+                // Add active class to the hovered card
+                card.classList.add('active', card.dataset.activeClass);
+                
+                // Update header
+                classificationText.textContent = card.dataset.classification;
+                classificationHeader.style.backgroundColor = card.dataset.color;
+
+                // Adjust header text color for contrast
+                if (card.dataset.color === '#FFC107') {
+                    classificationHeader.style.color = 'var(--gris-oscuro)';
+                } else {
+                    classificationHeader.style.color = 'var(--blanco)';
+                }
+            });
+        });
+
+        grid.addEventListener('mouseleave', () => {
+            // Remove active class from all cards
+            cards.forEach(c => {
+                c.classList.remove('active', 'active--sintetico', 'active--analitico', 'active--mixto');
+            });
+
+            // Reset header to default state
+            classificationText.textContent = defaultHeaderText;
+            classificationHeader.style.backgroundColor = defaultHeaderColor;
+            classificationHeader.style.color = defaultHeaderTextColor;
+        });
+
+    </script>
+</body>
+</html>

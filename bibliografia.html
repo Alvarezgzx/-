@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook de Lectoescritura - Recursos Bibliográficos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --magenta-principal: #E4007C;
+            --cian-secundario: #00AEEF;
+            --gris-oscuro: #212529;
+            --gris-claro: #F8F9FA;
+            --blanco: #FFFFFF;
+        }
+
+        body { font-family: 'Lato', sans-serif; color: var(--gris-oscuro); background-color: var(--gris-claro); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+
+        /* Navigation Link Styles */
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link.active { color: var(--magenta-principal); font-weight: 700; }
+        .nav-link.active .emoji-icon { transform: scale(1.2); }
+        .emoji-icon { font-size: 1.25rem; transition: transform 0.3s ease; }
+
+        /* Resource Card Styles */
+        .resource-card {
+            background-color: var(--blanco);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gris-oscuro);
+        }
+        .card-authors {
+            font-size: 0.875rem;
+            color: var(--magenta-principal);
+            font-weight: 600;
+            margin-top: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .card-description {
+            font-size: 0.95rem;
+            color: #4b5563; /* gray-600 */
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background-color: var(--gris-claro);
+            border-top: 1px solid #e5e7eb; /* gray-200 */
+            margin-top: auto;
+        }
+        .card-link {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--cian-secundario);
+            color: var(--blanco);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .card-link:hover {
+            background-color: #0097c7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-3">
+        <div class="flex items-center justify-between">
+            <a href="index.html" class="text-xl font-bold text-gris-oscuro font-poppins">Playbook de Lectoescritura</a>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">☰</button>
+            <ul id="desktop-nav" class="hidden md:flex items-center space-x-6 text-sm">
+                <li><a href="/fundamentos.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🧠</span><span>Fundamentos</span></a></li>
+                <li><a href="/estrategias.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">📚</span><span>Métodos</span></a></li>
+                <li><a href="/tecnologia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">💻</span><span>Tecnología</span></a></li>
+                <li><a href="/psicomotricidad.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✏️</span><span>Grafomotricidad</span></a></li>
+                <li><a href="/asistente-ia/" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">✨</span><span>Asistente de IA</span></a></li>
+                <li><a href="/bibliografia.html" class="nav-link flex items-center space-x-2 text-gray-600 hover:text-magenta-principal"><span class="emoji-icon">🗂️</span><span>Recursos</span></a></li>
+            </ul>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="/index.html" class="nav-link block py-2 text-gray-600">Inicio</a></li>
+                <li><a href="/fundamentos.html" class="nav-link block py-2 text-gray-600">Fundamentos Neuropsicológicos</a></li>
+                <li><a href="/estrategias.html" class="nav-link block py-2 text-gray-600">Métodos de Enseñanza</a></li>
+                <li><a href="/tecnologia.html" class="nav-link block py-2 text-gray-600">Herramientas Digitales</a></li>
+                <li><a href="/psicomotricidad.html" class="nav-link block py-2 text-gray-600">Grafomotricidad</a></li>
+                <li><a href="/asistente-ia/" class="nav-link block py-2 text-gray-600">Asistente de IA</a></li>
+                <li><a href="/bibliografia.html" class="nav-link block py-2 text-gray-600">Bibliografía</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <main class="container mx-auto px-6 py-12 md:py-20">
+        <div class="text-center mb-12">
+            <span class="text-6xl">🗂️</span>
+            <h1 class="text-3xl md:text-4xl font-bold text-gris-oscuro mt-4">Galería de Recursos Bibliográficos</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Una selección de estudios y artículos clave sobre lectoescritura, desarrollo del lenguaje y motricidad fina.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Card 1 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Evaluación e intervención de la lectura y la escritura en Neuropsicopedagogía (2022)</h5>
+                    <p class="card-authors">Ginna Marcela Ardila Villareal</p>
+                    <p class="card-description">Aborda los modelos y estrategias de evaluación e intervención desde la neuropsicopedagogía para atender dificultades en los procesos de lectoescritura.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://doi.org/10.31948/Rev.unimar/unimar40-2-art2" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Desarrollo del lenguaje en estudiantes del nivel Pre-escolar: Una revisión sistemática (2025)</h5>
+                    <p class="card-authors">Bejar, B. I., et al.</p>
+                    <p class="card-description">Analiza la importancia de las interacciones y estrategias docentes para el desarrollo del lenguaje oral en la etapa preescolar.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://doi.org/10.48082/espacios-a25v46n03p09" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Actividades grafoplásticas para desarrollar motricidad fina (2022)</h5>
+                    <p class="card-authors">María Briones y Nieve Jalil</p>
+                    <p class="card-description">Un estudio de caso que analiza cómo actividades grafoplásticas específicas pueden potenciar el desarrollo de la motricidad fina en niños de cuatro a cinco años.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.investigarmqr.com/ojs/index.php/mqr/article/view/552" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">El desarrollo de la motricidad fina en el grado preescolar (2019)</h5>
+                    <p class="card-authors">Berta Cristina Cabrera y Marisol N. Dupeyron</p>
+                    <p class="card-description">Artículo que propone un sistema de actividades pedagógicas (trazado, recorte, coloreado) para fortalecer las habilidades motrices finas en el aula de preescolar.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://mendive.upr.edu.cu/index.php/MendiveUPR/article/view/1499" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Técnicas grafo-plásticas innovadoras (2021)</h5>
+                    <p class="card-authors">Yésica Cárdena-Lliguisaca y Alexandra Castro-Salazar</p>
+                    <p class="card-description">Explora cómo las técnicas grafoplásticas innovadoras sirven como una experiencia de aprendizaje para desarrollar la grafomotricidad y la representación simbólica.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://fundacionkoinonia.com.ve/ojs/index.php/revistakoinonia/article/view/1496" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Actividades grafoplásticas como herramienta para la motricidad fina (2024)</h5>
+                    <p class="card-authors">Mary Luz Cayllahua Ramírez, et al.</p>
+                    <p class="card-description">Revisión que analiza diversas actividades grafoplásticas como herramientas clave para estimular la motricidad fina en la infancia, impactando el desarrollo integral.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://revistahorizontes.org/index.php/revistahorizontes/article/view/1614" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+            
+            <!-- Card 7 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">La grafomotricidad para la iniciación a la lectoescritura (2021)</h5>
+                    <p class="card-authors">Rivelino Rolando Chávez Mena</p>
+                    <p class="card-description">Tesis que demuestra cómo un programa de actividades grafomotrices influye positivamente en la adquisición de las habilidades iniciales de lectoescritura.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://repositorio.uladech.edu.pe/handle/20.500.13032/22638" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Aplicación de técnicas grafoplásticas para la pinza digital (2020)</h5>
+                    <p class="card-authors">Jhonny Copo y Ana Llamuca</p>
+                    <p class="card-description">Estudio centrado en cómo la aplicación de técnicas grafoplásticas específicas ayuda a desarrollar la "pinza digital" (pincer grasp) en niños de 3 a 4 años.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://dialnet.unirioja.es/servlet/articulo?codigo=7414339" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">La motricidad fina y su influencia en la escritura (2020)</h5>
+                    <p class="card-authors">Cira Delgado, Yudith Samada y José M. Zambrano</p>
+                    <p class="card-description">Analiza la influencia de la motricidad fina en la escritura, destacando actividades como rasgado y punzado para estimular los músculos de la mano.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://dominiodelasciencias.com/ojs/index.php/es/article/view/2902" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 10 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Los sistemas de escritura en el desarrollo del niño (1979)</h5>
+                    <p class="card-authors">Emilia Ferreiro y Ana Teberosky</p>
+                    <p class="card-description">Obra fundamental que revolucionó la comprensión de la lectoescritura, mostrando que el niño construye activamente hipótesis sobre la escritura antes de la enseñanza formal.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://archive.org/details/ferreiro-e.-y-teberosky-a.-los-sistemas-de-escritura-en-el-desarrollo-del-nino" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 11 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Desarrollo de técnicas grafo-plásticas con recursos no estructurados (2020)</h5>
+                    <p class="card-authors">Elizabeth Fernández-Sánchez, et al.</p>
+                    <p class="card-description">Artículo que propone el uso de recursos educativos no estructurados para desarrollar técnicas grafoplásticas, fomentando así la creatividad y la motricidad.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://fundacionkoinonia.com.ve/ojs/index.php/revistakoinonia/article/view/790" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 12 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Guía de actividades lúdicas para la motricidad fina (2022)</h5>
+                    <p class="card-authors">Génesis L. García y María V. Lazo</p>
+                    <p class="card-description">Propone una guía de actividades lúdicas, tanto cotidianas como estructuradas, para desarrollar la motricidad fina con apoyo desde el hogar.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://revistas.investigacion-upelipb.com/index.php/educare/article/view/1680" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 13 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Bases neuropsicofisiológicas del aprendizaje del lenguaje escrito (2021)</h5>
+                    <p class="card-authors">Labrada Estrada, L. E., et al.</p>
+                    <p class="card-description">Detalla los sistemas cerebrales y procesos (perceptuales, motores, cognitivos) que sustentan la adquisición de la lectoescritura.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://doi.org/10.46377/dilemas.v9i1.2847" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 14 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Desarrollo de la motricidad fina con actividades lúdicas (2021)</h5>
+                    <p class="card-authors">Maritza L. Ochoa, et al.</p>
+                    <p class="card-description">Demuestra cómo el uso de actividades lúdicas (rasgar, cortar, anudar) mejora la motricidad fina y la motivación de los niños en edad preescolar.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://mendive.upr.edu.cu/index.php/MendiveUPR/article/view/2393" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 15 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Importancia de la grafomotricidad en la lecto-escritura (2024)</h5>
+                    <p class="card-authors">Milton Rover Pucha-Quinchuela</p>
+                    <p class="card-description">Revisión que establece una relación directa entre la práctica de la grafomotricidad y el aprendizaje exitoso de la lectoescritura, previniendo dificultades futuras.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://polodelconocimiento.com/ojs/index.php/es/article/view/6375" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 16 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Influencia del Taller Lúvirmof para Habilidades Motrices Finas (2021)</h5>
+                    <p class="card-authors">Adolfo Salvador y Digna Oseda</p>
+                    <p class="card-description">Afirma que el aprendizaje se da a través del movimiento y la manipulación, explorando cómo un taller específico fortalece las habilidades motoras finas.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://ciencialatina.org/index.php/cienciala/article/view/595" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 17 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Técnicas grafoplásticas y su incidencia en la motricidad fina (2022)</h5>
+                    <p class="card-authors">Diana Y. Sánchez, et al.</p>
+                    <p class="card-description">Investigación que demuestra que las técnicas grafoplásticas facilitan la coordinación óculo-manual y, a la vez, fomentan la creatividad a través del arte.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://zenodo.org/records/7630049" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+            <!-- Card 18 -->
+            <div class="resource-card">
+                <div class="card-content">
+                    <h5 class="card-title">Estrategias Pedagógicas para la grafomotricidad (2020)</h5>
+                    <p class="card-authors">Mónica Vintimilla-Ormaza, et al.</p>
+                    <p class="card-description">Propone estrategias pedagógicas para el desarrollo de la grafomotricidad, concluyendo que esta es una fase previa y fundamental a la enseñanza de la escritura.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="https://dialnet.unirioja.es/servlet/articulo?codigo=7610732" target="_blank" class="card-link">Ver Recurso</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <footer class="bg-gris-oscuro text-gray-400 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Elaborado por Jesús Ángel Álvarez González</p>
+            <p class="text-xs mt-3">
+                &copy; 2025 Playbook de Lectoescritura. Todos los derechos reservados. | 
+                <a href="https://www.linkedin.com/in/angelalvarezg97/" target="_blank" rel="noopener noreferrer" class="font-semibold text-cian-secundario hover:underline">
+                    Conecta en LinkedIn
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
