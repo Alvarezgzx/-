@@ -32,3 +32,20 @@ export const generateLessonPlan = async (request: LessonPlanRequest): Promise<Le
     throw new Error("Ocurrió un error desconocido al comunicarse con el servidor.");
   }
 };
+
+// Define the types used in geminiService.ts
+
+export interface LessonPlanRequest {
+  // Add appropriate fields for your lesson plan request
+  topic: string;
+  grade: number;
+  objectives: string[];
+}
+
+export interface LessonPlan {
+  // Add appropriate fields for your lesson plan response
+  title: string;
+  activities: string[];
+  materials: string[];
+  duration: number;
+}
