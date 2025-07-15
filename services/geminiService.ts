@@ -1,4 +1,4 @@
-import { LessonPlanRequest, LessonPlan } from "../types";
+import { LessonPlanRequest, LessonPlan } from "C:\Users\Jaalv\OneDrive\Desktop\Playbook lectoescritura\App-lectoescritura\services\types.ts";
 
 // ¡IMPORTANTE! Esta es la URL directa a tu backend.
 const BACKEND_URL = 'https://applectoescritura-backend-702516870563.europe-west1.run.app/generate-plan';
@@ -32,3 +32,20 @@ export const generateLessonPlan = async (request: LessonPlanRequest): Promise<Le
     throw new Error("Ocurrió un error desconocido al comunicarse con el servidor.");
   }
 };
+
+// Define the types used in geminiService.ts
+
+export interface LessonPlanRequest {
+  // Add appropriate fields for your lesson plan request
+  topic: string;
+  grade: number;
+  objectives: string[];
+}
+
+export interface LessonPlan {
+  // Add appropriate fields for your lesson plan response
+  title: string;
+  activities: string[];
+  materials: string[];
+  duration: number;
+}
